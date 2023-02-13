@@ -36,10 +36,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn = findViewById(R.id.btn_connect);
-        mailbox = findViewById(R.id.mailbox);
-        passbox = findViewById(R.id.passbox);
+        try {
+            btn = findViewById(R.id.btn_connect);
+            mailbox = findViewById(R.id.mailbox);
+            passbox = findViewById(R.id.passbox);
 
-        btn.setOnClickListener(new btnAction());
+            btn.setOnClickListener(new btnAction());
+        }catch (Exception e){
+            toast(e.toString());
+        }
     }
 }
