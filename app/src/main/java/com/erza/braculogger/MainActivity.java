@@ -3,7 +3,6 @@ package com.erza.braculogger;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mailbox;
     private EditText passbox;
 
-    class btnActionn implements View.OnClickListener{
+    class btnAction implements View.OnClickListener{
 
         @Override
         public void onClick(View view) {
@@ -37,6 +36,6 @@ public class MainActivity extends AppCompatActivity {
         mailbox = findViewById(R.id.mailbox);
         passbox = findViewById(R.id.passbox);
 
-        btn.setOnClickListener(new btnActionn());
+        btn.setOnClickListener(new btnAction());
     }
 }
