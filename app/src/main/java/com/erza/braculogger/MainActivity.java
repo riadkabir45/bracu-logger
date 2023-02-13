@@ -2,6 +2,7 @@ package com.erza.braculogger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mailbox;
     private EditText passbox;
     private final OkHttpClient signal = new OkHttpClient();
+    SharedPreferences memory;
+    SharedPreferences.Editor memEdit;
 
     void toast(String txt){
         Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_LONG).show();
@@ -52,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                     .addHeader("User-Agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36")
                     .post(body)
                     .build();
+            memEdit.putString("mail", mail);
+            memEdit.putString("pass", pass);
+            memEdit.commit();
             try {
                 Response response = signal.newCall(request).execute();
                 Log.i(logTag, mail+","+pass);
@@ -81,12 +87,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.i(logTag, "Test");
-
         try {
+            memory = getSharedPreferences("BracU",MODE_PRIVATE);
+            memEdit = memory.edit();
             btn = findViewById(R.id.btn_connect);
             mailbox = findViewById(R.id.mailbox);
             passbox = findViewById(R.id.passbox);
+
+            mailbox.setText(memory.getString("mail",""));
+            passbox.setText(memory.getString("pass",""));
 
             btn.setOnClickListener(new btnAction());
         }catch (Exception e){
