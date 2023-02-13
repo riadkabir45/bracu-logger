@@ -13,6 +13,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText mailbox;
     private EditText passbox;
 
+    void toast(String txt){
+        Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_LONG).show();
+    }
+
     class btnAction implements View.OnClickListener{
 
         @Override
@@ -21,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
             String mail = mailbox.getText().toString();
             String pass = passbox.getText().toString();
             if(mail.isEmpty() || pass.isEmpty())
-                Toast.makeText(getApplicationContext(), "Please fill first!!!", Toast.LENGTH_LONG).show();
+                toast("Please fill first!!!");
             else
-                Toast.makeText(getApplicationContext(), mail + ": " + pass, Toast.LENGTH_LONG).show();
+                toast(mail + ": " + pass);
         }
     }
 
