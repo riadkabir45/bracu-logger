@@ -39,23 +39,11 @@ public class MainActivity extends AppCompatActivity {
             String pass = passbox.getText().toString();
 
             FormBody body = new FormBody.Builder()
-                    .add("dst","http://192.168.0.1/")
-                    .add("popup","true")
-                    .add("email", mail)
+                    .add("username", mail)
                     .add("password", pass)
                     .build();
             Request request = new Request.Builder()
                     .url("http://wifi.bracu.ac.bd/login")
-                    .addHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8")
-                    .addHeader("Accept-Language","en-US,en;q=0.9")
-                    .addHeader("Cache-Control","max-age=0")
-                    .addHeader("Connection","keep-alive")
-                    .addHeader("Content-Type","application/x-www-form-urlencoded")
-                    .addHeader("Origin","http://115.127.36.92")
-                    .addHeader("Referer","http://115.127.36.92/")
-                    .addHeader("Sec-GPC","1")
-                    .addHeader("Upgrade-Insecure-Requests","1")
-                    .addHeader("User-Agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36")
                     .post(body)
                     .build();
             memEdit.putString("mail", mail);
